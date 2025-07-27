@@ -1,23 +1,30 @@
 import { WeatherAdapterInterface } from "@/api/weather/types";
 import { FC } from "react";
 import { mergeForecastWithShortTermForecast } from "./utils";
+import dayjs from "dayjs";
+import { LiveSection } from "./LiveSection";
+import { ForecastSection } from "./ForecastSection";
+import { Header } from "./Header";
 
 interface Props {
   live: Awaited<ReturnType<WeatherAdapterInterface["live"]>>;
   today_temperature: Awaited<
     ReturnType<WeatherAdapterInterface["todayTemperature"]>
   >;
-  forecast: Awaited<ReturnType<WeatherAdapterInterface["forecast"]>>;
-  short_term_forecast: Awaited<
-    ReturnType<WeatherAdapterInterface["shortTermForecast"]>
-  >;
   merged_forcast: ReturnType<typeof mergeForecastWithShortTermForecast>;
+  update_time: string;
 }
 
 const WeatherMain: FC<Props> = (props) => {
-  const { live, today_temperature, merged_forcast } = props;
+  const { live, today_temperature, merged_forcast, update_time } = props;
 
-  return <div>WeatherMain</div>;
+  return (
+    <main>
+      <Header update_time={update_time} />
+      <LiveSection live={live} today_temperature={today_temperature} />
+      <ForecastSection forecast_list={merged_forcast} />
+    </main>
+  );
 };
 
 export { WeatherMain };

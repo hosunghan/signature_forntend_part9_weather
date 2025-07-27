@@ -3,6 +3,7 @@ import { WeatherMain } from "@/domains/weather";
 import { GetStaticProps } from "next";
 import { Weather, WeatherAdapter } from "@/api/weather";
 import { mergeForecastWithShortTermForecast } from "@/domains/weather/utils";
+import dayjs from "dayjs";
 
 interface Props extends ComponentProps<typeof WeatherMain> {}
 
@@ -37,6 +38,7 @@ export const getStaticProps: GetStaticProps = async () => {
       live,
       today_temperature,
       merged_forcast,
+      update_time: dayjs().format("YYYY-MM-DD HH:mm:ss"),
     },
   };
 };
